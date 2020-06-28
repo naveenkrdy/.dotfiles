@@ -1,3 +1,6 @@
+#Install fonts
+cp -Rf ${MAIN_DIR}/macos/files/*.ttf ${HOME}/Library/Fonts/
+
 # Enable HiDPI display modes (requires restart)
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
@@ -45,7 +48,7 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 defaults write com.apple.screencapture disable-shadow -bool true
 
 # Save screenshots to the ~/Pictures folder instead
-defaults write com.apple.screencapture location -string "$HOME/Pictures/"
+defaults write com.apple.screencapture location -string "${HOME}/Pictures/"
 
 # Save screenshots as PNGs
 defaults write com.apple.screencapture type -string "png"
