@@ -3,7 +3,7 @@
 # naveenkrdy (28/12/19)
 
 export MAIN_DIR="$(dirname "${0}")"
-export WALLPAPER="Beach"
+export WALLPAPER="Mountain"
 export TERMINAL="Broadcast"
 export SCREENSAVER=""
 
