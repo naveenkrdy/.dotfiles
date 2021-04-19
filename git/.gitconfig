@@ -1,6 +1,6 @@
 [user]
-name = naveenkrdy
-email = naveenk2908@gmail.com
+	name = naveenkrdy
+	email = naveenk2908@gmail.com
 
 [core]
-excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore

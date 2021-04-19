@@ -9,3 +9,8 @@ export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 export PYTHONIOENCODING='UTF-8'
 export TERM='xterm-256color'
+
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off

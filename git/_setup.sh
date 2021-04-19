@@ -1,3 +1,2 @@
-# Copy over files
-cp -vRf ${MAIN_DIR}/git/.gitconfig ${HOME}
-cp -vRf ${MAIN_DIR}/git/.gitignore ${HOME}
+ln -sFv ${MAIN_DIR}/git/.gitconfig ${HOME}/.gitconfig
+ln -sFv ${MAIN_DIR}/git/.gitignore ${HOME}/.gitignore

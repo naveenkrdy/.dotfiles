@@ -31,12 +31,12 @@ SPACESHIP_PROMPT_ORDER=(
   terraform # Terraform workspace section
   exec_time # Execution time
   line_sep  # Line break
-  battery   # Battery level and status
   vi_mode   # Vi-mode indicator
   jobs      # Background jobs indicator
   char      # Prompt character
 )
 SPACESHIP_RPROMPT_ORDER=(
+  battery   # Battery level and status
   exit_code # Exit code section
   time      # Time stamps section
 )
@@ -53,3 +53,4 @@ SPACESHIP_USER_SHOW="true"
 SPACESHIP_DIR_PREFIX=" \uf52d  "
 SPACESHIP_DIR_TRUNC="0"
 SPACESHIP_DIR_LOCK_SYMBOL=" \uf023 "
+SPACESHIP_BATTERY_SHOW="charged"

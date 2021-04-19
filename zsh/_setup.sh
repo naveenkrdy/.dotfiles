@@ -1,2 +1,2 @@
-cp -vRf ${MAIN_DIR}/zsh/.zsh ${HOME}
-cp -vRf ${MAIN_DIR}/zsh/.zshrc ${HOME}
+ln -sFv ${MAIN_DIR}/zsh/.zsh ${HOME}/.zsh
+ln -sFv ${MAIN_DIR}/zsh/.zshrc ${HOME}/.zshrc

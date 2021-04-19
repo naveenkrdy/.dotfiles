@@ -25,7 +25,8 @@ fi
 brew analytics off
 
 # Install using brew file
-brew bundle --file="${MAIN_DIR}/brew/brewfile"
+ln -sFv ${MAIN_DIR}/brew/brewfile ~/brewfile
+brew bundle
 
 # Accept xcode license
 sudo xcodebuild -license accept

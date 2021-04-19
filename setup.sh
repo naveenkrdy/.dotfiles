@@ -29,7 +29,7 @@ function kill_them() {
 
 printf '\033[8;60;200t' && clear
 echo
-echo -e "${italic} dotFiles ${normal}"
+echo -e "${italic} .dotFiles ${normal}"
 echo -e "${italic} $(date -R) ${normal}"
 echo
 sleep 2
