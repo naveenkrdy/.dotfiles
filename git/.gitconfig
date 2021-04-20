@@ -4,3 +4,6 @@
 
 [core]
 	excludesfile = ~/.gitignore
+
+[credential]
+	helper = osxkeychain

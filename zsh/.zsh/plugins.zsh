@@ -5,6 +5,7 @@ antigen bundle git
 antigen bundle pip
 antigen bundle colored-man-pages
 antigen bundle extract
+antigen bundle autojump
 # Load bundles from external repos.
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions

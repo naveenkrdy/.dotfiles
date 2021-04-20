@@ -1,2 +1,7 @@
-ln -sFv ${MAIN_DIR}/vim/.vim ${HOME}/.vim
-ln -sFv ${MAIN_DIR}/vim/.vimrc ${HOME}/.vimrc
+#!/usr/bin/env bash
+
+cd $(dirname "${0}")
+echo $PWD
+
+ln -sFv ${PWD}/.vim ${HOME}/.vim
+ln -sFv ${PWD}/.vimrc ${HOME}/.vimrc

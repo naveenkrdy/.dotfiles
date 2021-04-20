@@ -1,5 +1,5 @@
 # Supress login prompt upon launch
-# touch ${HOME}/.hushlogin
+touch ${HOME}/.hushlogin
 
 # Only use UTF-8 in Terminal.app
 defaults write com.apple.terminal StringEncodings -array 4
@@ -18,7 +18,7 @@ defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling
 # defaults write com.apple.Terminal FocusFollowsMouse -string YES
 
 # Set terminal theme to custom theme `Smyck`
-cp -vRf ${MAIN_DIR}/macos/files/${TERMINAL}.terminal /tmp/custom.terminal
+cp -vRf ${PWD}/files/${TERMINAL}.terminal /tmp/custom.terminal
 osascript <<EOD
 tell application "Terminal"
 	local allOpenedWindows

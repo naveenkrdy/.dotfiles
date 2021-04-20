@@ -1,5 +1,5 @@
 # Set custom wallpaper for all desktop screens
-WALLPAPER="${MAIN_DIR}/macos/files/{$WALLPAPER}.jpeg"
+WALLPAPER="${PWD}/files/{$WALLPAPER}.jpeg"
 osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${WALLPAPER}\"" &>/dev/null
 # osascript -e "tell application \"System Events\" to tell desktop 1 to set picture to \"${WALLPAPER1}\"" &>/dev/null
 # osascript -e "tell application \"System Events\" to tell desktop 2 to set picture to \"${WALLPAPER2}\"" &>/dev/null

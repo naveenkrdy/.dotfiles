@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+cd $(dirname "${0}")
+echo $PWD
+
 if [[ ! -d /Library/Developer/CommandLineTools ]]; then
 	# Install Xcode cmd tools
 	xcode-select --install &>/dev/null
@@ -25,7 +30,7 @@ fi
 brew analytics off
 
 # Install using brew file
-ln -sFv ${MAIN_DIR}/brew/brewfile ~/brewfile
+ln -sFv ${PWD}/brewfile ${HOME}/brewfile
 brew bundle
 
 # Accept xcode license
@@ -34,3 +39,5 @@ sudo xcodebuild -license accept
 brew update
 brew upgrade
 brew cleanup
+
+cd_back

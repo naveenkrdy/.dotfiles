@@ -1,2 +1,7 @@
-ln -sFv ${MAIN_DIR}/zsh/.zsh ${HOME}/.zsh
-ln -sFv ${MAIN_DIR}/zsh/.zshrc ${HOME}/.zshrc
+#!/usr/bin/env bash
+
+cd $(dirname "${0}")
+echo $PWD
+
+ln -sFv ${PWD}/.zsh ${HOME}/.zsh
+ln -sFv ${PWD}/.zshrc ${HOME}/.zshrc

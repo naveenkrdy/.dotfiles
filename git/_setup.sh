@@ -1,2 +1,7 @@
-ln -sFv ${MAIN_DIR}/git/.gitconfig ${HOME}/.gitconfig
-ln -sFv ${MAIN_DIR}/git/.gitignore ${HOME}/.gitignore
+#!/usr/bin/env bash
+
+cd $(dirname "${0}")
+echo $PWD
+
+ln -sFv ${PWD}/.gitconfig ${HOME}/.gitconfig
+ln -sFv ${PWD}/.gitignore ${HOME}/.gitignore

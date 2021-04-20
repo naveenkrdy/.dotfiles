@@ -30,4 +30,3 @@ brew_zsh="/usr/local/bin/zsh"
 
 #Key-bindings
 [[ -f ${zsh_dir}/key_bindings.zsh ]] && source ${zsh_dir}/key_bindings.zsh
-
