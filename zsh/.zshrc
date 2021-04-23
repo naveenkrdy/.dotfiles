@@ -1,5 +1,3 @@
-setopt rmstarsilent
-
 zsh_dir="${HOME}/.zsh"
 vim_dir="${HOME}/.vim"
 antigen_dir="${HOME}/.antigen"
