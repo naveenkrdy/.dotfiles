@@ -27,7 +27,7 @@ function xclean() {
   [[ -d ./build ]] && rm -rf ./build
   rm -rf ${HOME}/Library/Developer/Xcode/DerivedData/*
 }
-function transfer() {
+function tf() {
   [[ $# == 0 ]] && echo "Usage: transfer <file|directory>" && return 1
   file="$1"
   file_name=$(basename "$file")
