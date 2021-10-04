@@ -1,5 +1,6 @@
 # Make ~/Library folder visible
-chflags nohidden ${HOME}/Library && xattr -d com.apple.FinderInfo ${HOME}/Library
+chflags nohidden ${HOME}/Library
+xattr -d com.apple.FinderInfo ${HOME}/Library
 
 # Enable show path bar in finder
 defaults write com.apple.finder ShowPathbar -bool true

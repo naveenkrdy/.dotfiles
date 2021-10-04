@@ -26,7 +26,7 @@ defaults write com.apple.dock tilesize -int 47
 # defaults write com.apple.dock autohide-time-modifier -int 0
 
 # Enable Show indicator lights for open applications in the Dock"
-defaults write com.apple.dock show-process-indicators -bool true
+# defaults write com.apple.dock show-process-indicators -bool true
 
 # Enable highlight hover effect for the grid view or stack view in Dock
 defaults write com.apple.dock mouse-over-hilite-stack -bool true

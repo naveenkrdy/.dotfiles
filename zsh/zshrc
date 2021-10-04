@@ -1,0 +1,53 @@
+# osascript -e "tell application \"Terminal\" to set the font name of window 1 to \"JetBrainsMono Nerd Font\""
+# osascript -e "tell application \"Terminal\" to set the font size of window 1 to 22"
+
+function _check_internet() {
+    ping -c1 "8.8.8.8" &>"/dev/null" && return 0 || echo 'No internet connection...' && return 1
+}
+function _setup_homebrew() {
+    _check_internet
+	cmd_dir='/Library/Developer/CommandLineTools'
+    if [[ ! -d $cmd_dir ]]; then
+        xcode-select --install &>/dev/null
+        sleep 2
+        osascript &>/dev/null <<EOD
+			  tell application "System Events"
+		   		 tell process "Install Command Line Developer Tools"
+		      		keystroke return
+		     	 	click button "Agree" of window "License Agreement"
+		    	end tell
+		 	 end tell
+EOD
+        until [[ -d $cmd_dir ]]; do
+            sleep 1
+        done
+    fi
+
+    CI=1 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+}
+
+brew_zsh="/usr/local/bin/zsh"
+function _setup_zsh() {
+	_check_internet
+    [[ ! -x $(command -v brew) ]] && _setup_homebrew
+    [[ ! -x $brew_zsh ]] && brew install zsh
+    grep -Fxq "$brew_zsh" /private/etc/shells || echo $brew_zsh | sudo tee -a /private/etc/shells
+    chsh -s $brew_zsh
+}
+
+#Begin
+[[ ! -f ${HOME}/.hushlogin ]] && touch ${HOME}/.hushlogin
+[[ $SHELL != $brew_zsh ]] && _setup_zsh
+
+zsh_dir="${HOME}/.zsh"
+source_list=(
+    plugins
+    ls_colors
+    exports
+    aliases
+    functions
+    key_bindings
+)
+for file in "${source_list[@]}"; do
+    [[ -f ${zsh_dir}/${file}.zsh ]] && source ${zsh_dir}/${file}.zsh
+done

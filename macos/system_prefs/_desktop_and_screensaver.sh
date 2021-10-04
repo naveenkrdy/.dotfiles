@@ -1,11 +1,13 @@
 # Set custom wallpaper for all desktop screens
-WALLPAPER="${PWD}/files/{$WALLPAPER}.jpeg"
+WALLPAPER="Clouds.jpeg"
+WALLPAPER="${PWD}/files/wallpapers/{$WALLPAPER}"
 osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${WALLPAPER}\"" &>/dev/null
 # osascript -e "tell application \"System Events\" to tell desktop 1 to set picture to \"${WALLPAPER1}\"" &>/dev/null
 # osascript -e "tell application \"System Events\" to tell desktop 2 to set picture to \"${WALLPAPER2}\"" &>/dev/null
 
 # Set custom Screen Saver
-# cp -Rf ${MAIN_DIR}/macos/files/{SCREENSAVER}.saver ${HOME}/Library/Screen\ Savers/
+# SCREENSAVER="Hellos.saver"
+# cp -Rf ${PWD}/files/screensavers/{SCREENSAVER} ${HOME}/Library/Screen\ Savers/
 # defaults -currentHost write com.apple.screensaver moduleDict "
 #   <dict>
 #     <key>moduleName</key><string>Shell</string>

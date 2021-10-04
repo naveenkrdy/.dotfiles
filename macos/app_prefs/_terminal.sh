@@ -18,7 +18,8 @@ defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling
 # defaults write com.apple.Terminal FocusFollowsMouse -string YES
 
 # Set terminal theme to custom theme `Smyck`
-cp -vRf ${PWD}/files/${TERMINAL}.terminal /tmp/custom.terminal
+TERMINAL="naveen.terminal"
+cp -vRf ${PWD}/files/terminalcolors${TERMINAL} /tmp/custom.terminal
 osascript <<EOD
 tell application "Terminal"
 	local allOpenedWindows

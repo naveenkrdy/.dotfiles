@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd $(dirname "${0}")
-echo $PWD
+echo "Switching to $PWD"
 
-ln -sFv ${PWD}/.gitconfig ${HOME}/.gitconfig
-ln -sFv ${PWD}/.gitignore ${HOME}/.gitignore
+ln -sFv ${PWD}/gitconfig ${HOME}/.gitconfig
+ln -sFv ${PWD}/gitignore ${HOME}/.gitignore

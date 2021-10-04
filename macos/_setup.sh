@@ -1,40 +1,58 @@
 #!/usr/bin/env bash
 
 cd $(dirname "${0}")
-echo $PWD
+echo "Switching to $PWD"
 
-export WALLPAPER="Mountain"
-export TERMINAL="Broadcast"
-export SCREENSAVER=""
+system_prefs_list=(
+    general
+    desktop_and_screensaver
+    dock
+    mission_control
+    siri
+    spotlight
+    language_and_region
+    user_and_groups
+    accessibility
+    security_and_privacy
+    bluetooth
+    keyboard
+    mouse
+    energy_saver
+    date_and_time
+    sharing
+    time_machine
+    miscellaneous
+)
+app_prefs_list=(
+    finder
+    terminal
+    textedit
+    activity_monitor
+    safari
+)
 
-# Kill processes
-kill_all
+function kill_prs() {
+	    for app in "Activity Monitor" \
+	        "cfprefsd" \
+	        "Safari" \
+	        "Disk Utility" \
+	        "Dock" \
+	        "Finder" \
+	        "TextEdit" \
+	        "System Prefrences" \
+	        "SystemUIServer"; do
+	        killall ${app} &>/dev/null
+	    done
+	}
 
-# System Prefrences
-source ${PWD}/system_prefs/_general.sh
-source ${PWD}/system_prefs/_desktop_and_screensaver.sh
-source ${PWD}/system_prefs/_dock.sh
-source ${PWD}/system_prefs/_mission_control.sh
-source ${PWD}/system_prefs/_siri.sh
-source ${PWD}/system_prefs/_spotlight.sh
-source ${PWD}/system_prefs/_language_and_region.sh
-source ${PWD}/system_prefs/_user_and_groups.sh
-source ${PWD}/system_prefs/_accessibility.sh
-source ${PWD}/system_prefs/_security_and_privacy.sh
-source ${PWD}/system_prefs/_bluetooth.sh
-source ${PWD}/system_prefs/_keyboard.sh
-source ${PWD}/system_prefs/_mouse.sh
-source ${PWD}/system_prefs/_energy_saver.sh
-source ${PWD}/system_prefs/_date_and_time.sh
-source ${PWD}/system_prefs/_sharing.sh
-source ${PWD}/system_prefs/_time_machine.sh
-source ${PWD}/system_prefs/_miscellaneous.sh
-# Apps Prefrences
-source ${PWD}/app_prefs/_finder.sh
-source ${PWD}/app_prefs/_terminal.sh
-source ${PWD}/app_prefs/_textedit.sh
-source ${PWD}/app_prefs/_activity_monitor.sh
-source ${PWD}/app_prefs/_safari.sh
+kill_prs
 
-# kill processes again to apply
-kill_all
+for pref in "${system_prefs_list[@]}"; do
+    source ${PWD}/system_prefs/_${pref}.sh
+done
+
+for pref in "${app_prefs_list[@]}"; do
+    source ${PWD}/app_prefs/_${pref}.sh
+done
+
+kill_prs

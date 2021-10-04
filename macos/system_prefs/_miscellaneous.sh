@@ -1,8 +1,8 @@
 #Install fonts
-cp -vRf ${PWD}/files/*.ttf ${HOME}/Library/Fonts/
+cp -vRf ${PWD}/files/fonts/*.ttf ${HOME}/Library/Fonts/
 
 # Enable HiDPI display modes (requires restart)
-sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+# sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
 # Use AirDrop over every interface.
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
@@ -26,7 +26,7 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 # defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
 # Enable reveal IP address, hostname, OS version, etc. when clicking the clock in the login window
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+# sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 # Enable spring loading for directories
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
@@ -54,7 +54,7 @@ defaults write com.apple.screencapture location -string "${HOME}/Pictures/"
 defaults write com.apple.screencapture type -string "png"
 
 # Enable Help Viewer windows to non-floating mode
-defaults write com.apple.helpviewer DevMode -bool true
+# defaults write com.apple.helpviewer DevMode -bool true
 
 # Disable disk image verification"
 defaults write com.apple.frameworks.diskimages skip-verify -bool true
@@ -62,10 +62,10 @@ defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
 defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 # Expand save panel by default
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 
 # Expand print panel by default
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 
 # Hide the Time Machine and Volume icons from the menu bar
 # for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do

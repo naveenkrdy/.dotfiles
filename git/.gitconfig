@@ -1,9 +1,0 @@
-[user]
-	name = naveenkrdy
-	email = naveenk2908@gmail.com
-
-[core]
-	excludesfile = ~/.gitignore
-
-[credential]
-	helper = osxkeychain
