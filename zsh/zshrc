@@ -1,13 +1,20 @@
 # osascript -e "tell application \"Terminal\" to set the font name of window 1 to \"JetBrainsMono Nerd Font\""
 # osascript -e "tell application \"Terminal\" to set the font size of window 1 to 22"
 
-function _check_internet() {
-    ping -c1 "8.8.8.8" &>"/dev/null" && return 0 || echo 'No internet connection...' && return 1
+# Silence prompt login
+[[ ! -f ${HOME}/.hushlogin ]] && touch ${HOME}/.hushlogin
+
+function _check_internet {
+    # Check for internet connection
+    ping -c 1 "8.8.8.8" >/dev/null && return 0 || echo "Internet connection...failed" && return 1
 }
-function _setup_homebrew() {
-    _check_internet
-	cmd_dir='/Library/Developer/CommandLineTools'
+
+brew_zsh="/usr/local/bin/zsh"
+function _install_homebrew_zsh {
+    # Install xcode command-line tools
+    cmd_dir='/Library/Developer/CommandLineTools'
     if [[ ! -d $cmd_dir ]]; then
+        _check_internet || return 1
         xcode-select --install &>/dev/null
         sleep 2
         osascript &>/dev/null <<EOD
@@ -22,24 +29,30 @@ EOD
             sleep 1
         done
     fi
-
-    CI=1 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    # Installs homebrew
+    if [[ ! -x $(command -v brew) ]]; then
+        _check_internet || return 1
+        CI=1 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    fi
+    # Installs brew zsh
+    if [[ ! -x $brew_zsh ]]; then
+        _check_internet || return 1
+        brew install zsh
+    fi
 }
-
-brew_zsh="/usr/local/bin/zsh"
-function _setup_zsh() {
-	_check_internet
-    [[ ! -x $(command -v brew) ]] && _setup_homebrew
-    [[ ! -x $brew_zsh ]] && brew install zsh
+function _setup_zsh {
+    _install_homebrew_zsh || return 1
+    # Add to shells list
     grep -Fxq "$brew_zsh" /private/etc/shells || echo $brew_zsh | sudo tee -a /private/etc/shells
+    # Change default shell
     chsh -s $brew_zsh
 }
 
-#Begin
-[[ ! -f ${HOME}/.hushlogin ]] && touch ${HOME}/.hushlogin
-[[ $SHELL != $brew_zsh ]] && _setup_zsh
+if [[ $SHELL != $brew_zsh ]]; then
+    echo "Setting up brew zsh..."
+    _setup_zsh
+fi
 
-zsh_dir="${HOME}/.zsh"
 source_list=(
     plugins
     ls_colors
@@ -48,6 +61,8 @@ source_list=(
     functions
     key_bindings
 )
+
+zsh_dir="${HOME}/.zsh"
 for file in "${source_list[@]}"; do
     [[ -f ${zsh_dir}/${file}.zsh ]] && source ${zsh_dir}/${file}.zsh
 done
