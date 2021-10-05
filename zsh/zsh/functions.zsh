@@ -110,7 +110,7 @@ $vendor $model
 $ocversion
 EOF
 }
-function decompaml() {
+function decomaml() {
     for file in ./*.aml; do
         echo
         echo "---------------------------------------------"
@@ -119,7 +119,7 @@ function decompaml() {
         iasl -vi -ve ./${file}
     done
 }
-function bundleid(){
+function getbundleid(){
 	osascript -e 'on run args
 	set output to {}
 	repeat with a in args
