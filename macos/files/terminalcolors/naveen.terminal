@@ -1349,10 +1349,10 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
-	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA18QHlNG
-	TW9ub05lcmRGb250Q29tcGxldGUtUmVndWxhctIXGBkaWiRjbGFzc25hbWVYJGNsYXNz
-	ZXNWTlNGb250ohkbWE5TT2JqZWN0CBEaJCkyN0lMUVNYXmdud36FjpCSlLW6xc7V2AAA
-	AAAAAAEBAAAAAAAAABwAAAAAAAAAAAAAAAAAAADh
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA18QIlJv
+	Ym90b01vbm9OZXJkRm9udENvbXBsZXRlLVJlZ3VsYXLSFxgZGlokY2xhc3NuYW1lWCRj
+	bGFzc2VzVk5TRm9udKIZG1hOU09iamVjdAgRGiQpMjdJTFFTWF5nbnd+hY6QkpS5vsnS
+	2dwAAAAAAAABAQAAAAAAAAAcAAAAAAAAAAAAAAAAAAAA5Q==
 	</data>
 	<key>FontAntialias</key>
 	<true/>
@@ -1555,11 +1555,11 @@
 	<key>UseBrightBold</key>
 	<true/>
 	<key>columnCount</key>
-	<integer>90</integer>
+	<integer>120</integer>
 	<key>name</key>
 	<string>Tomorrow Night</string>
 	<key>rowCount</key>
-	<integer>50</integer>
+	<integer>35</integer>
 	<key>shellExitAction</key>
 	<integer>1</integer>
 	<key>type</key>
