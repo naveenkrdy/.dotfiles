@@ -3,6 +3,20 @@
 cd $(dirname "${0}")
 echo "Switching to $PWD"
 
+function kill_prs() {
+    for app in "Activity Monitor" \
+        "cfprefsd" \
+        "Safari" \
+        "Disk Utility" \
+        "Dock" \
+        "Finder" \
+        "TextEdit" \
+        "System Prefrences" \
+        "SystemUIServer"; do
+        killall ${app} &>/dev/null
+    done
+}
+
 system_prefs_list=(
     general
     desktop_and_screensaver
@@ -31,22 +45,7 @@ app_prefs_list=(
     safari
 )
 
-function kill_prs() {
-	    for app in "Activity Monitor" \
-	        "cfprefsd" \
-	        "Safari" \
-	        "Disk Utility" \
-	        "Dock" \
-	        "Finder" \
-	        "TextEdit" \
-	        "System Prefrences" \
-	        "SystemUIServer"; do
-	        killall ${app} &>/dev/null
-	    done
-	}
-
 kill_prs
-
 for pref in "${system_prefs_list[@]}"; do
     source ${PWD}/system_prefs/_${pref}.sh
 done
@@ -54,5 +53,4 @@ done
 for pref in "${app_prefs_list[@]}"; do
     source ${PWD}/app_prefs/_${pref}.sh
 done
-
 kill_prs
