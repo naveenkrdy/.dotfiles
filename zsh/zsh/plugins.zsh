@@ -53,9 +53,7 @@ antigen_plugin_settings() {
 	SPACESHIP_DIR_PREFIX="\uf01c "
 	SPACESHIP_EXIT_CODE_SHOW="true"
 	# SPACESHIP_EXEC_TIME_PREFIX=""
-	SPACESHIP_EXEC_TIME_PREFIX="\ufc23"
-	SPACESHIP_EXEC_TIME_SUFFIX=" "
-
+	SPACESHIP_EXEC_TIME_PREFIX="\ufa1a"
 }
 
 antigen_download() {
