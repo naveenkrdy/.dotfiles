@@ -1,24 +1,24 @@
-function print_divider() {
+print_divider() {
   local div="\u2500"
   local dividecolor="\e[38;05;234m"
   local spacing=""
   ((termwidth = $COLUMNS - 1))
   for i in {1..$termwidth}; do
-    spacing="${spacing}${div}"
+    local spacing="${spacing}${div}"
   done
   echo
   echo ${dividecolor}${spacing}%F{reset}
 }
-function fancy_ctrl_z() {
+fancy_ctrl_z() {
   if [[ $#BUFFER -eq 0 ]]; then
-    BUFFER="fg"
+    local BUFFER="fg"
     zle accept-line -w
   else
     zle push-input -w
     zle clear-screen -w
   fi
 }
-zshreload() {
+zsh_reload() {
 	local cache="$ZSH_CACHE_DIR"
 	autoload -U compinit zrecompile
 	compinit -i -d "$cache/zcomp-$HOST"
@@ -26,13 +26,11 @@ zshreload() {
 	for f in ${ZDOTDIR:-~}/.zshrc "$cache/zcomp-$HOST"; do
 		zrecompile -p $f && command rm -f $f.zwc.old
 	done
-
 	# Use $SHELL if it's available and a zsh shell
 	local shell="$ZSH_ARGZERO"
 	if [[ "${${SHELL:t}#-}" = zsh ]]; then
 		shell="$SHELL"
 	fi
-
 	# Remove leading dash if login shell and run accordingly
 	if [[ "${shell:0:1}" = "-" ]]; then
 		exec -l "${shell#-}"
@@ -40,33 +38,33 @@ zshreload() {
 		exec "$shell"
 	fi
 }
-function encrpt() {
+encrypt_256() {
   openssl enc -aes-256-cbc -in "$1" -out "$2"
 }
-function decrpt() {
+decrpt_256() {
   openssl enc -aes-256-cbc -d -in "$1" -out "$2"
 }
-function bx() {
+base_hex() {
   echo "$1" | base64 -d | od -t x1 -An | tr -d ' ' | cut -f2- -d 'e'
 }
-function xb() {
+hex_base() {
   echo -n "{0e}$1" | xxd -r -p | base64
 }
-function dx() {
+dec_hex() {
 	printf '%x\n' "$1"
 }
-function xd() {
+hex_dec() {
 	echo $((0x$1))
 }
-function kextpermfix() {
+kext_perm_fix() {
   sudo chown -R 0:0 "$1"
   sudo chmod -R 0755 "$1"
 }
-function xcodeclean() {
+xcode_clean() {
   [[ -d ./build ]] && rm -rf ./build
   rm -rf ${HOME}/Library/Developer/Xcode/DerivedData/*
 }
-function tfr() {
+transfer_sh() {
   [[ $# == 0 ]] && echo "Usage: transfer <file|directory>" && return 1
   local file="$1"
   local file_name=$(basename "$file")
@@ -79,28 +77,28 @@ function tfr() {
   echo -n "$link" | pbcopy
   echo "$link"
 }
-function quicklook() {
+quick_look() {
   (($# > 0)) && qlmanage -p $* &>/dev/null &
 }
-function manpreview() {
+man_preview() {
   man -t "$@" | open -f -a Preview
 }
-function copybuffer() {
+copy_buffer() {
   if which clipcopy &>/dev/null; then
     printf "%s" "$BUFFER" | clipcopy
   else
     echo "clipcopy function not found. Please make sure you have Oh My Zsh installed correctly."
   fi
 }
-function copyfile() {
+copy_file() {
   emulate -L zsh
   clipcopy "$1"
 }
-function copydir() {
+copy_dir() {
   emulate -L zsh
   print -n $PWD | clipcopy
 }
-function ocinfo() {
+opencore_info() {
 	local vendor=$(nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:oem-vendor | awk '{print $2}')
 	local model=$(nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:oem-product | cut -f2-)
 	local ocversion=$(nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:opencore-version | awk "{print \$(NF)}")
@@ -110,7 +108,7 @@ $vendor $model
 $ocversion
 EOF
 }
-function decomaml() {
+decomp_aml() {
     for file in ./*.aml; do
         echo
         echo "---------------------------------------------"
@@ -119,7 +117,7 @@ function decomaml() {
         iasl -vi -ve ./${file}
     done
 }
-function getbundleid(){
+get_bundleid(){
 	osascript -e 'on run args
 	set output to {}
 	repeat with a in args
