@@ -1,5 +1,7 @@
 antigen_plugin_settings() {
 	# OMZ Settings
+	DISABLE_MAGIC_FUNCTIONS="true"
+	CASE_SENSITIVE="true"
 	DISABLE_AUTO_TITLE="true"
 	HIST_STAMPS="dd.mm.yyyy"
 	# Spaceship theme settings
@@ -44,7 +46,7 @@ antigen_plugin_settings() {
 		# battery   # Battery level and status
 		# time      # Time stamps section
 	)
-	# SPACESHIP_PROMPT_ADD_NEWLINE="false"
+	SPACESHIP_PROMPT_ADD_NEWLINE="false"
 	SPACESHIP_PROMPT_FIRST_PREFIX_SHOW="true"
 	SPACESHIP_CHAR_COLOR_SUCCESS="yellow"
 	SPACESHIP_CHAR_SUFFIX=" "
@@ -55,21 +57,27 @@ antigen_plugin_settings() {
 	# SPACESHIP_EXEC_TIME_PREFIX=""
 	SPACESHIP_EXEC_TIME_PREFIX="\ufa1a"
 }
-
 antigen_download() {
 	# Download antigen
 	_check_internet || return 1
 	curl -L git.io/antigen >${zsh_dir}/antigen.zsh
 }
-antigen_load() {
+antigen_config_load() {
 	# Source antigen
 	autoload antigen
 	source ${zsh_dir}/antigen.zsh
-	# Load plugin settings
+	# Load plugin settings before hand
 	antigen_plugin_settings
 	# Use OMZ framework
 	antigen use oh-my-zsh
 	# Load plugins from OMZ
+	antigen bundle osx
+	antigen bundle copybuffer
+	antigen bundle copyfile
+	antigen bundle copydir
+	antigen bundle transfer
+	antigen bundle sprunge
+	antigen bundle git-auto-fetch
 	antigen bundle extract
 	antigen bundle universalarchive
 	antigen bundle per-directory-history
@@ -81,7 +89,7 @@ antigen_load() {
 	antigen bundle hlissner/zsh-autopair
 	# Load theme
 	# antigen theme geometry-zsh/geometry
-	antigen theme jackharrisonsherlock/common
+	# antigen theme jackharrisonsherlock/common
 	antigen theme spaceship-prompt/spaceship-prompt
 	# antigen theme romkatv/powerlevel10k
 	# Tell Antigen that you're done.
@@ -93,7 +101,7 @@ ADOTDIR="$zsh_dir/antigen"
 
 if [[ ! -f ${zsh_dir}/antigen.zsh ]]; then
 	echo "Setting up antigen..."
-	antigen_download && antigen_load
+	antigen_download && antigen_config_load
 else
-	antigen_load
+	antigen_config_load
 fi
