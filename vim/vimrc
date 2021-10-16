@@ -1,9 +1,6 @@
-" set meta-flag on         # Enable 8bit input
-" set input-meta on        # Enable 8bit input
-" set output-meta on       # Keep the 8th bit for display
-" set convert-meta off     # Turns off 8th bit stripping
-
-" VimPlug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin Manager
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let need_to_install_plugins = 0
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -14,14 +11,15 @@ endif
 
 call plug#begin()
 
+Plug 'preservim/nerdtree'
+Plug 'jacoborus/tender.vim'
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive',  {'commit': '5d11ff7'}
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'raimondi/delimitmate'
 Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
@@ -32,87 +30,120 @@ if need_to_install_plugins == 1
     q
 endif
 
+" Coc-nvim settings
+" let g:coc_global_extensions = ['coc-git','coc-marketplace']
 
-set nocompatible
-set backspace=indent,eol,start
-set clipboard=unnamed
-set mouse=a
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Sets how many lines of history VIM has to remember
+set history=1000
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is changed from the outside
 set autoread
-set fileformat=unix
-set encoding=utf-8
-set fileencoding=utf-8
-set pumheight=20
-set conceallevel=0
-set splitbelow
-set splitright
-set ruler
-set viminfo='25,\"50,n~/.viminfo
-set nobackup
-set nowritebackup
-set noswapfile
-set undodir=~/.vim/undodir
-set undofile
-set history=1000 
-set textwidth=120
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
-set nolazyredraw
-set magic
-set noerrorbells
-set visualbell
-set t_vb=
-set tm=500
-set number
-set wrap
-set wrapmargin=8 
-set linebreak
-set showbreak=↪
-set autoindent
-set smartindent
-set ttyfast
-set laststatus=2 
-set so=7
-set wildmenu
-set hidden
-set showcmd
-set noshowmode
-set shell=$SHELL
-set cmdheight=2
-" set title
-set showmatch
-set mat=2
-set updatetime=300
-set signcolumn=yes
-set shortmess+=c
-set expandtab
-set smarttab
-set tabstop=4
-set softtabstop=4 
-set shiftwidth=4
-set shiftround
-set foldmethod=syntax
-set foldlevelstart=99
-set foldnestmax=10 
-set nofoldenable
-set foldlevel=1
-set ttimeout
-set ttimeoutlen=1
-"set list
-"set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-"set listchars=tab:>-,trail:~,extends:>,precedes:<,space:.
-set diffopt+=vertical,iwhite,internal,algorithm:patience,hiddenoff
-set t_Co=256
-set t_ut=
-set background=dark 
+au FocusGained,BufEnter * checktime
 
 " Set leader key
-let g:mapleader = "`"
+let mapleader = "`"
 
+" Fast saving
+nmap <leader>w :w!<cr>
 
-" Gruvbox theme
-let g:gruvbox_contrast_dark = 'hard'
+" :W sudo saves the file. (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Show texts normally
+set conceallevel=0
+
+" Decrease Update time
+set updatetime=100
+
+" Set 7 lines to the cursor - when moving vertically using j/k
+set so=7
+
+" Avoid garbled characters in Chinese language windows OS
+let $LANG='en'
+set langmenu=en
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+" Dont show status in vim
+set noshowmode
+
+" Set pop up menu height
+set pumheight=20
+
+" Turn on the Wild menu
+set wildmenu
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
+
+" Show line numbers
+set number
+
+" Enable mouse interaction
+set mouse=a
+
+"Always show current position
+set ruler
+
+" Height of the command bar
+set cmdheight=1
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Add a bit extra margin to the left
+set foldcolumn=1
 
 " Set cursor shapes in different modes
 let &t_SI.="\e[5 q" "SI = INSERT mode
@@ -123,83 +154,267 @@ let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-" highlight conflicts
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Ligh-line settings
-let g:lightline = { 'colorscheme': 'gruvbox' }
+" Enable syntax highlighting
+syntax enable
 
-" Vim-indent-guides settings
-set ts=2 sw=2 et
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 2
+try
+    colorscheme gruvbox
+catch
+endtry
 
-" Tag-bar settings
-map <leader>t :TagbarToggle<CR>
+set background=dark
 
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-map <leader>s :SyntasticCheck<CR>
-map <leader>d :SyntasticReset<CR>
-map <leader>e :lnext<CR>
-map <leader>r :lprev<CR>
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
 
-" Restore positon in file from previous session
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
 
-" Coc-nvim settings
-let g:coc_global_extensions = ['coc-python','coc-sh','coc-explorer','coc-vimlsp','coc-json','coc-xml','coc-marketplace']
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups and undo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+" Turn backup off, since most stuff is in SVN, git etc.
+set nobackup
+set nowb
+set noswapfile
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <C-space> ?
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
+
+" Close all the buffers
+map <leader>ba :bufdo bd<cr>
+
+map <leader>l :bnext<cr>
+map <leader>h :bprevious<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+" Let 'tl' toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" Return to last edit position when opening files.
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" Airline theme settings
+let g:airline_theme = 'gruvbox'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline_powerline_fonts = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Move a line of text using ALT+[jk] or Command+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+
+" Delete trailing white space on save, useful for some filetypes ;)
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+if has("autocmd")
+    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Remove the Windows ^M - when the encodings gets messed up
+noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
+" Quickly open a buffer for scribble
+map <leader>q :e ~/buffer<cr>
+
+" Quickly open a markdown buffer for scribble
+map <leader>x :e ~/buffer.md<cr>
+
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    endif
+    return ''
 endfunction
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
 
-" Coc-exploreor
-nmap <leader>e :CocCommand explorer
-    \ --toggle
-    \ --sources=buffer+,file+<CR>
-autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
 
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
 
-" move through split windows
-nmap <leader><Up> :wincmd k<CR>
-nmap <leader><Down> :wincmd j<CR>
-nmap <leader><Left> :wincmd h<CR>
-nmap <leader><Right> :wincmd l<CR>
+function! CmdLine(str)
+    call feedkeys(":" . a:str)
+endfunction
 
-" Use alt + hjkl to resize windows
-nnoremap <M-j>    :resize -2<CR>
-nnoremap <M-k>    :resize +2<CR>
-nnoremap <M-h>    :vertical resize -2<CR>
-nnoremap <M-l>    :vertical resize +2<CR>
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
 
-" TAB in general mode will move to text buffer
-nnoremap <TAB> :bnext<CR>
-" SHIFT-TAB will go back
-nnoremap <S-TAB> :bprevious<CR>
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
 
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
 
-syntax on
-filetype on
-filetype plugin indent on
-colorscheme gruvbox
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+" function! AirlineInit()
+"   let g:airline_section_a = airline#section#create(['mode',' ','branch'])
+"   let g:airline_section_b = airline#section#create_left(['ffenc','hunks','%f'])
+"   let g:airline_section_c = airline#section#create(['filetype'])
+"   let g:airline_section_x = airline#section#create(['%P'])
+"   let g:airline_section_y = airline#section#create(['%B'])
+"   let g:airline_section_z = airline#section#create_right(['%l','%c'])
+" endfunction
+" autocmd VimEnter * call AirlineInit()
