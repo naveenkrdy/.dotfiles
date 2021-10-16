@@ -38,5 +38,5 @@ EOD
     brew cleanup
 else
     ln -sFv ${PWD}/brewfile ${HOME}/brewfile
-	chflags -H hidden ${HOME}/brewfile
+	chflags -h hidden ${HOME}/brewfile
 fi
