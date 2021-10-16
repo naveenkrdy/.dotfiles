@@ -1349,7 +1349,7 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
 	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGkCwwVFlUkbnVsbNQNDg8QERIT
-	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNAKAAAAAAAABAQgAKAA18QIlJv
+	FFZOU1NpemVYTlNmRmxhZ3NWTlNOYW1lViRjbGFzcyNALAAAAAAAABAQgAKAA18QIlJv
 	Ym90b01vbm9OZXJkRm9udENvbXBsZXRlLVJlZ3VsYXLSFxgZGlokY2xhc3NuYW1lWCRj
 	bGFzc2VzVk5TRm9udKIZG1hOU09iamVjdAgRGiQpMjdJTFFTWF5nbnd+hY6QkpS5vsnS
 	2dwAAAAAAAABAQAAAAAAAAAcAAAAAAAAAAAAAAAAAAAA5Q==
@@ -1551,13 +1551,15 @@
 	Zg1rDXYNfw2MDY8NnA2lDaoNsgAAAAAAAAIBAAAAAAAAACgAAAAAAAAAAAAAAAAAAA21
 	</data>
 	<key>UseBoldFonts</key>
-	<true/>
+	<false/>
 	<key>UseBrightBold</key>
 	<true/>
 	<key>columnCount</key>
 	<integer>120</integer>
+	<key>fontAllowsDisableAntialias</key>
+	<integer>1</integer>
 	<key>name</key>
-	<string>Tomorrow Night</string>
+	<string>Tomorrow Night Modded</string>
 	<key>rowCount</key>
 	<integer>35</integer>
 	<key>shellExitAction</key>
