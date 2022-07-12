@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-cd $(dirname "${0}")
-echo "Switching to $PWD"
+source ../misc.sh
 
-ln -sFv ${PWD}/vim ${HOME}/.vim
-ln -sFv ${PWD}/vimrc ${HOME}/.vimrc
+install_brew_pkg vim
+
+link "${PWD}/vim" "${HOME}/.vim"
+link "${PWD}/vimrc" "${HOME}/.vimrc"

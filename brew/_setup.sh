@@ -1,42 +1,22 @@
 #!/usr/bin/env bash
 
-cd $(dirname "${0}")
-echo "Switching to $PWD"
+source ../misc.sh
 
-if [[ $1 == "install" ]]; then
-    if [[ ! -d /Library/Developer/CommandLineTools ]]; then
-        xcode-select --install &>/dev/null
-        sleep 2
-        osascript &>/dev/null <<EOD
-			  tell application "System Events"
-		   		 tell process "Install Command Line Developer Tools"
-		      		keystroke return
-		     	 	click button "Agree" of window "License Agreement"
-		    	end tell
-		 	 end tell
-EOD
-        # Wait till install finishes
-        until [[ -d /Library/Developer/CommandLineTools ]]; do
-            sleep 1
-        done
-    fi
-    # Install Homebrew
-    if [[ ! -x $(command -v brew) ]]; then
-        CI=1 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    fi
+cd $(dirname "${0}") && echo "Switching to $PWD"
 
-    # Disable homebrew analytics
-    brew analytics off
-    # Install using brew file
-    ln -sFv ${PWD}/brewfile ${HOME}/brewfile
-	chflags -H hidden ${HOME}/brewfile
-    brew bundle
-    # Accept xcode license
-    sudo xcodebuild -license accept
-    # Cleanup
-    brew autoremove
-    brew cleanup
-else
-    ln -sFv ${PWD}/brewfile ${HOME}/brewfile
-	chflags -h hidden ${HOME}/brewfile
-fi
+setup_homebrew
+
+# Disable brew analytics
+brew analytics off
+
+# Install from brewfile
+link "${PWD}/brewfile" "${HOME}/brewfile"
+chflags -H hidden ${HOME}/brewfile
+brew bundle
+
+# Accept xcode license
+sudo xcodebuild -license accept
+
+# Cleanup
+brew autoremove
+brew cleanup --prune=all
