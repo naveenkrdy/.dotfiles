@@ -56,8 +56,6 @@ zstyle ':completion:*' list-colors 'ma=1;30;43:ow=1;36:di=0;36:ln=35'
 zstyle ':completion:*' menu select
 
 
-
-
 # Exports
 export PATH="/usr/local/sbin:${PATH}"
 export PATH="$(brew --prefix ruby)/bin:${PATH}"

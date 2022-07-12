@@ -71,10 +71,10 @@ antigen_config_load() {
 	# Use OMZ framework
 	antigen use oh-my-zsh
 	# Load plugins from OMZ
-	antigen bundle osx
+	antigen bundle macos
 	antigen bundle copybuffer
 	antigen bundle copyfile
-	antigen bundle copydir
+	antigen bundle copypath
 	antigen bundle transfer
 	antigen bundle sprunge
 	antigen bundle git-auto-fetch
@@ -82,8 +82,9 @@ antigen_config_load() {
 	antigen bundle universalarchive
 	antigen bundle per-directory-history
 	antigen bundle dircycle
+	antigen bundle grc
 	# Load plugins from external repos
-	antigen bundle zdharma/fast-syntax-highlighting
+	antigen bundle zdharma-continuum/fast-syntax-highlighting
 	antigen bundle zsh-users/zsh-autosuggestions
 	antigen bundle zsh-users/zsh-completions
 	antigen bundle hlissner/zsh-autopair

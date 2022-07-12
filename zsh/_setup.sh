@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-cd $(dirname "${0}")
-echo "Switching to $PWD"
+source ../misc.sh
 
-ln -sFv ${PWD}/zsh ${HOME}/.zsh
-ln -sFv ${PWD}/zshrc ${HOME}/.zshrc
+setup_zsh
+
+link "${PWD}/zsh" "${HOME}/.zsh"
+link "${PWD}/zshrc" "${HOME}/.zshrc"

@@ -1,58 +1,9 @@
-# osascript -e "tell application \"Terminal\" to set the font name of window 1 to \"JetBrainsMono Nerd Font\""
-# osascript -e "tell application \"Terminal\" to set the font size of window 1 to 14"
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+# zmodload zsh/zprof
 
 # Silence prompt login
 [[ ! -f ${HOME}/.hushlogin ]] && touch ${HOME}/.hushlogin
-
-function _check_internet {
-    # Check for internet connection
-    ping -c 1 "8.8.8.8" >/dev/null && return 0 || echo "Internet connection...failed" && return 1
-}
-
-brew_zsh="/usr/local/bin/zsh"
-function _install_homebrew_zsh {
-    # Install xcode command-line tools
-    cmd_dir='/Library/Developer/CommandLineTools'
-    if [[ ! -d $cmd_dir ]]; then
-        _check_internet || return 1
-        xcode-select --install &>/dev/null
-        sleep 2
-        osascript &>/dev/null <<EOD
-			  tell application "System Events"
-		   		 tell process "Install Command Line Developer Tools"
-		      		keystroke return
-		     	 	click button "Agree" of window "License Agreement"
-		    	end tell
-		 	 end tell
-EOD
-        until [[ -d $cmd_dir ]]; do
-            sleep 1
-        done
-    fi
-    # Installs homebrew
-    if [[ ! -x $(command -v brew) ]]; then
-        _check_internet || return 1
-        CI=1 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    fi
-    # Installs brew zsh
-    if [[ ! -x $brew_zsh ]]; then
-        _check_internet || return 1
-        brew install zsh
-    fi
-}
-
-function _setup_zsh {
-    _install_homebrew_zsh || return 1
-    # Add to shells list
-    grep -Fxq "$brew_zsh" /private/etc/shells || echo $brew_zsh | sudo tee -a /private/etc/shells
-    # Change default shell
-    chsh -s $brew_zsh
-}
-
-if [[ $SHELL != $brew_zsh ]]; then
-    echo "Setting up brew zsh..."
-    _setup_zsh
-fi
 
 source_list=(
     plugins
@@ -61,10 +12,17 @@ source_list=(
     aliases
     functions
     key_bindings
+	completions
 )
 
 zsh_dir="${HOME}/.zsh"
 for file in "${source_list[@]}"; do
     [[ -f ${zsh_dir}/${file}.zsh ]] && source ${zsh_dir}/${file}.zsh
 done
+
 echo
+
+# zprof
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"

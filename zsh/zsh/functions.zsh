@@ -71,6 +71,3 @@ kext_perm_fix() {
   sudo chown -R 0:0 "$1"
   sudo chmod -R 0755 "$1"
 }
-pip_upg() {
-  pip install -U $(pip list --outdated | awk 'NR>2 {print $1}')
-}
