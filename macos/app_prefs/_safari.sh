@@ -1,4 +1,4 @@
-# Enable don’t send search queries to Apple in safari
+# Enable don't send search queries to Apple in safari
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
 
@@ -9,13 +9,13 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 # Enable show the full URL in the address bar (note: this still hides the scheme)
 # defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-# Enable prevent Safari from opening ‘safe’ files automatically after downloading
+# Enable prevent Safari from opening 'safe' files automatically after downloading
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
 # Enable allow hitting the Backspace key to go to the previous page in history in safari
 defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
 
-# Enable Safari’s debug menu
+# Enable Safari's debug menu
 defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
 # Enable the Develop menu and the Web Inspector in safari
@@ -36,5 +36,3 @@ defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool fals
 
 # Enable Auto-Update extensions automatically in safari
 defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
-
-

@@ -53,10 +53,10 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # </dict>"
 
 # Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Delay Until Repeat
-defaults write NSGlobalDomain "InitialKeyRepeat_Level_Saved" -int 15
+# defaults write NSGlobalDomain "InitialKeyRepeat_Level_Saved" -int 10
 
 # Set the key repeat rate to fast
-defaults write NSGlobalDomain KeyRepeat -int 2
+# defaults write NSGlobalDomain KeyRepeat -int 2

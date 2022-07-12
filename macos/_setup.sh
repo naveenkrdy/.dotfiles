@@ -1,21 +1,8 @@
 #!/usr/bin/env bash
 
-cd $(dirname "${0}")
-echo "Switching to $PWD"
+source ../misc.sh
 
-function kill_prs() {
-    for app in "Activity Monitor" \
-        "cfprefsd" \
-        "Safari" \
-        "Disk Utility" \
-        "Dock" \
-        "Finder" \
-        "TextEdit" \
-        "System Prefrences" \
-        "SystemUIServer"; do
-        killall ${app} &>/dev/null
-    done
-}
+cd $(dirname "${0}") && echo "Switching to $PWD"
 
 system_prefs_list=(
     general
@@ -45,7 +32,7 @@ app_prefs_list=(
     safari
 )
 
-kill_prs
+kill_procs
 for pref in "${system_prefs_list[@]}"; do
     source ${PWD}/system_prefs/_${pref}.sh
 done
@@ -53,4 +40,4 @@ done
 for pref in "${app_prefs_list[@]}"; do
     source ${PWD}/app_prefs/_${pref}.sh
 done
-kill_prs
+kill_procs
