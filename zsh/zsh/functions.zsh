@@ -7,6 +7,7 @@ fancy_ctrl_z() {
     zle clear-screen -w
   fi
 }
+
 # transfer_sh() {
 #   [[ $# == 0 ]] && echo "Usage: transfer <file|directory>" && return 1
 #   local file="$1"
@@ -20,6 +21,7 @@ fancy_ctrl_z() {
 #   echo -n "$link" | pbcopy
 #   echo "$link"
 # }
+
 opencore_info() {
   local vendor=$(nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:oem-vendor | awk '{print $2}')
   local model=$(nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:oem-product | cut -f2-)
@@ -30,6 +32,7 @@ $vendor $model
 $ocversion
 EOF
 }
+
 decomp_aml() {
   for file in ./*.aml; do
     echo
@@ -39,6 +42,7 @@ decomp_aml() {
     iasl -vi -ve ./${file}
   done
 }
+
 get_bundleid() {
   osascript -e 'on run args
 	set output to {}
@@ -49,24 +53,34 @@ get_bundleid() {
 	output as text
 	end' $1
 }
+
 encrypt_256() {
   openssl enc -aes-256-cbc -in "$1" -out "$2"
 }
+
 decrpt_256() {
   openssl enc -aes-256-cbc -d -in "$1" -out "$2"
 }
-base_hex() {
-  echo "$1" | base64 -d | od -t x1 -An | tr -d ' ' | cut -f2- -d 'e'
+
+convert() {
+  case "$1" in
+    texttobase) print -n "$2" | base64;;
+    basetotext) print -n "$2" | base64 -d && echo;;
+    texttohex) print -n "0x$(printf '%s' "$2" | xxd -p)" && echo;;
+    hextotext) print -n "${2#0x}" | xxd -r -p && echo;;
+    texttobin) print -n "$2" | perl -lape '$_=unpack"B*"' ;;
+    bintotext) print -n "$2" | perl -lape '$_=pack"B*",$_';;
+    hextobase) print -n "0x$(printf '%s' "${2#0x}" | xxd -r -p | base64)" && echo;;
+    basetohex) print -n "0x$(printf '%s' "$2" | base64 -d | xxd -p)" && echo;;
+    *) print "Invalid conversion type. Available options: basetohex, hextobase, texttobase, basetotext, texttobin, bintotext, hextotext, texttohex" ;;
+  esac
 }
-hex_base() {
-  echo -n "{0e}$1" | xxd -r -p | base64
-}
-dec_hex() {
-  printf '%x\n' "$1"
-}
-hex_dec() {
-  echo $((0x$1))
-}
+
+
+
+
+
+
 kext_perm_fix() {
   sudo chown -R 0:0 "$1"
   sudo chmod -R 0755 "$1"

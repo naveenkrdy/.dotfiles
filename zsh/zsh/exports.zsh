@@ -3,6 +3,7 @@ HISTFILE="${HOME}/.zsh_history"  # History file location
 HISTSIZE=100000                  # Max command lines to stored in memory while your bash session is ongoing
 SAVEHIST=$HISTSIZE               # Max History file size
 
+
 # setopt ALL_EXPORT                 # Start auto-exporting variables
 # setopt AUTO_CD                  # 'cd' to a directory without typing cd
 # setopt AUTO_MENU                # Auto use menu completion after the second consecutive request for completion
@@ -73,3 +74,4 @@ export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export MANPAGER='less -s -M +Gg'
+export HISTTIMEFORMAT=""
